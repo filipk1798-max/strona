@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bananek355 — Portfolio</title>
+<meta name="description" content="Bananek355 — pluginy Minecraft, boty Discord, grafiki i montaż.">
+<style>
+  :root{
+    --bg:#0f1410;
+    --bg-panel:#161d17;
+    --line:#2a352b;
+    --text:#e8ede8;
+    --muted:#93a493;
+    --accent:#7ddc6a;
+    --accent-dim:#4f7a45;
+    --mono: "JetBrains Mono", "Fira Code", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --sans: "Space Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:
+      linear-gradient(180deg, rgba(125,220,106,0.05), transparent 300px),
+      var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit}
+  .wrap{max-width:880px;margin:0 auto;padding:0 24px;}
+
+  /* subtle blocky texture, nod to minecraft grid without being kitschy */
+  .grid-bg{
+    position:fixed;inset:0;z-index:-1;opacity:0.5;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:48px 48px;
+    mask-image: radial-gradient(ellipse 90% 60% at 50% 0%, black, transparent);
+    opacity:0.35;
+  }
+
+  header{
+    padding:72px 0 40px;
+    border-bottom:1px solid var(--line);
+  }
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:13px;
+    color:var(--accent);
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:18px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:8px;height:8px;
+    background:var(--accent);
+    display:inline-block;
+    box-shadow:0 0 12px var(--accent);
+  }
+  h1{
+    font-size:clamp(2.2rem, 6vw, 3.4rem);
+    line-height:1.08;
+    margin:0 0 20px;
+    letter-spacing:-0.02em;
+  }
+  h1 .hi{color:var(--accent)}
+  .lede{
+    font-size:1.05rem;
+    color:var(--muted);
+    max-width:60ch;
+    margin:0;
+  }
+  .lede b{color:var(--text);font-weight:600}
+
+  section{padding:56px 0;}
+  .section-head{
+    display:flex;align-items:baseline;justify-content:space-between;
+    margin-bottom:28px;
+    flex-wrap:wrap;gap:8px;
+  }
+  h2{
+    font-size:1.1rem;
+    font-family:var(--mono);
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    color:var(--text);
+    margin:0;
+  }
+  h2 .num{color:var(--accent-dim)}
+  .section-note{font-family:var(--mono);font-size:12px;color:var(--muted)}
+
+  .projects{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(240px,1fr));
+    gap:16px;
+  }
+  .card{
+    background:var(--bg-panel);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:20px;
+    position:relative;
+    overflow:hidden;
+    transition:border-color .18s ease, transform .18s ease;
+  }
+  .card:hover{
+    border-color:var(--accent-dim);
+    transform:translateY(-2px);
+  }
+  .card::before{
+    content:"";
+    position:absolute;top:0;left:0;right:0;height:3px;
+    background:linear-gradient(90deg, var(--accent), transparent);
+    opacity:0;transition:opacity .18s ease;
+  }
+  .card:hover::before{opacity:1}
+  .card .tag{
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--accent);
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    margin-bottom:10px;
+    display:block;
+  }
+  .card h3{
+    margin:0 0 8px;
+    font-size:1.05rem;
+  }
+  .card p{
+    margin:0;
+    color:var(--muted);
+    font-size:.92rem;
+  }
+  .img-slot{
+    margin-top:14px;
+    height:120px;
+    border:1px dashed var(--line);
+    border-radius:4px;
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--mono);font-size:11px;color:var(--muted);
+    background:repeating-linear-gradient(45deg, transparent, transparent 8px, rgba(255,255,255,.02) 8px, rgba(255,255,255,.02) 16px);
+  }
+
+  .about{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:16px;
+  }
+  .stat-row{
+    display:flex;gap:24px;flex-wrap:wrap;
+    padding-top:8px;
+  }
+  .stat{
+    font-family:var(--mono);
+  }
+  .stat .n{color:var(--accent);font-size:1.4rem;display:block}
+  .stat .l{color:var(--muted);font-size:.8rem;text-transform:uppercase;letter-spacing:.05em}
+
+  footer{
+    border-top:1px solid var(--line);
+    padding:40px 0 64px;
+  }
+  .contact-row{
+    display:flex;gap:28px;flex-wrap:wrap;
+  }
+  .contact-row a{
+    font-family:var(--mono);
+    font-size:.95rem;
+    color:var(--text);
+    text-decoration:none;
+    border-bottom:1px solid var(--accent-dim);
+    padding-bottom:2px;
+    transition:color .15s ease, border-color .15s ease;
+  }
+  .contact-row a:hover{color:var(--accent);border-color:var(--accent)}
+  .copyright{margin-top:28px;font-size:.8rem;color:var(--muted);font-family:var(--mono)}
+
+  @media (max-width:600px){
+    header{padding:52px 0 32px}
+    section{padding:40px 0}
+  }
+</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+
+<div class="wrap">
+  <header>
+    <h1>Cześć, jestem <span class="hi">Bananek</span>.</h1>
+    <p class="lede">
+      Od <b>4 lat</b> tworzę serwery Minecraft, od <b>2 lat</b> piszę pluginy,
+      a od roku programuję boty Discord. Poza kodem zajmuję się też
+      montażem filmów i tworzeniem grafik.
+    </p>
+    <div class="stat-row">
+      <div class="stat"><span class="n">4 lata</span><span class="l">serwery MC</span></div>
+      <div class="stat"><span class="n">2 lata</span><span class="l">pluginy MC</span></div>
+      <div class="stat"><span class="n">1 rok</span><span class="l">boty Discord</span></div>
+      <div class="stat"><span class="n">1 rok</span><span class="l">grafika</span></div>
+    </div>
+  </header>
+
+  <section id="projekty">
+    <div class="section-head">
+      <h2><span class="num">#</span> Moje projekty</h2>
+      <span class="section-note">7 realizacji</span>
+    </div>
+    <div class="projects">
+
+      <div class="card">
+        <span class="tag">Grafika</span>
+        <h3>Profilowe</h3>
+        <p>Zdjęcie profilowe zrobione dla mnie.</p>
+        <img src="profilowe.png" alt="Profilowe" style="width:100%;border-radius:4px;margin-top:14px;display:block">
+      </div>
+
+      <div class="card">
+        <span class="tag">Discord Bot</span>
+        <h3>Bot Discord — FlashMC</h3>
+        <p>Bot Discord stworzony dla serwera FlashMC.</p>
+        <img src="flashmc-bot.png" alt="Bot Discord FlashMC" style="width:100%;border-radius:4px;margin-top:14px;display:block">
+      </div>
+
+      <div class="card">
+        <span class="tag">Discord Bot</span>
+        <h3>Core Bot — HorizonCode</h3>
+        <p>Core bot Discord zbudowany dla serwera HorizonCode.</p>
+        <img src="horizoncode-bot.png" alt="Core Bot HorizonCode" style="width:100%;border-radius:4px;margin-top:14px;display:block">
+      </div>
+
+      <div class="card">
+        <span class="tag">Grafika</span>
+        <h3>Obrazek do Embeda</h3>
+        <p>Grafika do embeda na Discord dla serwera CrystalCode.</p>
+        <img src="crystalcode-embed.png" alt="Obrazek do embeda CrystalCode" style="width:100%;border-radius:4px;margin-top:14px;display:block">
+      </div>
+
+      <div class="card">
+        <span class="tag">Grafika</span>
+        <h3>Banner — YETIMC.PL</h3>
+        <p>Banner reklamowy stworzony dla serwera YETIMC.PL.</p>
+        <img src="yetimc-banner.png" alt="Banner YETIMC.PL" style="width:100%;border-radius:4px;margin-top:14px;display:block">
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div class="section-head" style="margin-bottom:16px">
+      <h2><span class="num">#</span> Kontakt</h2>
+    </div>
+    <div class="contact-row">
+      <a href="https://discord.com/users/" target="_blank" rel="noopener">Discord: bana.nek355</a>
+      <a href="mailto:bananek.dev@gmail.com">bananek.dev@gmail.com</a>
+    </div>
+    <p class="copyright">Portfolio | Bananek355</p>
+  </footer>
+</div>
+
+</body>
+</html>
