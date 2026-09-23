@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8">
+    <title>Bananek355 Portfolio</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    
+    <nav class="navbar">
+      <a href="#hero" class="nav-btn active" data-target="0">Glowna</a>
+      <a href="#projects" class="nav-btn" data-target="1">Projekty</a>
+      <a href="#orders" class="nav-btn" data-target="2">Zrealizowane</a>
+      <a href="#contact" class="nav-btn" data-target="3">Kontakt</a>
+    </nav>
+
+    <section class="screen hero-screen active" id="hero" data-screen="0">
+      <div class="divmain">
+        <h1 class="title">Bananek355 Portfolio</h1>
+      </div>
+      <div class="scroll-down-indicator">
+        <span>skroluj na dol</span>
+        <div class="arrow">▼</div>
+      </div>
+    </section>
+
+    <section class="screen projects-screen" id="projects" data-screen="1">
+      <div class="screen-content">
+        <h2 class="section-title">Moje projekty</h2>
+        
+        <div class="gallery-grid">
+          <div class="project-card">
+            <div class="image-container">
+              <img src="boxgg.png" alt="BoxGG">
+              <div class="overlay">
+                <span class="project-name">BoxGG</span>
+                <p class="project-desc">Serwer BoxPVP w minecraft działający od stycznia 2026 roku</p>
+              </div>
+            </div>
+            <div class="image-bar">Serwer BoxPVP</div>
+          </div>
+
+          <div class="project-card">
+            <div class="image-container">
+              <img src="latwycode.png" alt="ŁatwyCode">
+              <div class="overlay">
+                <span class="project-name">LatwyCode</span>
+                <p class="project-desc">Moj własny discord serwer: code z darmowymi zasobami na twój serwer!</p>
+              </div>
+            </div>
+            <div class="image-bar">ŁatwyCode</div>
+          </div>
+        </div>
+
+      </div>
+      <div class="scroll-down-indicator">
+        <span>skroluj dalej</span>
+        <div class="arrow">▼</div>
+      </div>
+    </section>
+
+    <section class="screen orders-screen" id="orders" data-screen="2">
+      <div class="screen-content">
+        <h2 class="section-title">Moje zlecenia</h2>
+        
+        <div class="gallery-grid">
+          <div class="project-card">
+            <div class="image-container">
+              <img src="horizon.png" alt="Bot Discord">
+              <div class="overlay">
+                <span class="project-name">Bot Discord #1</span>
+                <p class="project-desc">Bot Core na serwer HorizonCode z dużą funkcjonalnością</p>
+              </div>
+            </div>
+            <div class="image-bar">Bot na serwer HorizonCode</div>
+          </div>
+        </div>
+
+      </div>
+      <div class="scroll-down-indicator">
+        <span>skroluj dalej</span>
+        <div class="arrow">▼</div>
+      </div>
+    </section>
+
+    <section class="screen contact-screen" id="contact" data-screen="3">
+      <div class="screen-content">
+        <h2 class="section-title">Kontakt i Info</h2>
+        
+        <div class="profile-box">
+          <div class="profile-left">
+            <img src="profilowe.png" alt="Profilowe" class="profile-img">
+            <div class="profile-info">
+              <h3>Bananek355</h3>
+              <p class="profile-desc">Siema, jestem bananek! Lubie programować i też czasami nagrywam na youtube. Robie boty discord, pluginy .jar i skrypty .sk.</p>
+            </div>
+          </div>
+          <div class="profile-right">
+            <ul class="skills-list">
+              <li><span class="dot yellow"></span> Boty discord: 1.2 roku</li>
+              <li><span class="dot orange"></span> Pluginy Java: 2 lata</li>
+              <li><span class="dot green"></span> Skrypty .sk: 3 lata</li>
+            </ul>
+            <div class="contact-box">
+              <span>Kontakt Discord:</span> 
+              <strong id="discordTag" onclick="copyDiscord()" title="Kliknij, aby skopiować">bana.nek355</strong>
+              <span id="copyNotification" class="copy-notif">Skopiowano do schowka!</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <footer class="footer-copyright">
+        &copy; 2026 Bananek355. Wszelkie prawa zastrzeżone.
+      </footer>
+    </section>
+
+    <script>
+      const screens = document.querySelectorAll('.screen');
+      const navButtons = document.querySelectorAll('.nav-btn');
+
+      const observerOptions = {
+        root: null,
+        threshold: 0.5
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+            const screenIndex = entry.target.getAttribute('data-screen');
+            
+            navButtons.forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`.nav-btn[data-target="${screenIndex}"]`).classList.add('active');
+          } else {
+            entry.target.classList.remove('active');
+          }
+        });
+      }, observerOptions);
+
+      screens.forEach(screen => observer.observe(screen));
+
+      function copyDiscord() {
+        const discordText = "bana.nek355";
+        navigator.clipboard.writeText(discordText).then(() => {
+          const notif = document.getElementById('copyNotification');
+          notif.style.opacity = '1';
+          setTimeout(() => {
+            notif.style.opacity = '0';
+          }, 2000);
+        });
+      }
+    </script>
+  </body>
+</html>
